@@ -75,6 +75,12 @@ final class Core {
 
 		// Load the functions file
 		include $this->plugin->root.'/core/functions.php';
+
+		// Hook the post data
+		add_action('the_post', [&$this, 'the_post']);
+
+		// Add the shortcode
+		// ...
 	}
 
 
@@ -99,11 +105,23 @@ final class Core {
 
 
 
+	// WP Hooks
+	// ---------------------------------------------------------------------------------------------------
+
+
+
 	/**
-	 * On plugin uninstall
+	 * Hook from setup postdata
 	 */
-	public function onUninstall() {
-		delete_option($this->plugin->prefix.'_settings');
+	public function the_post(&$post) {
+
+		// Check input value
+		if (!is_object($post) || !is_a($post, 'WP_Post') || empty($post->ID))
+			return;
+
+		// Check post_subtitle property
+		if (!isset($post->post_subtitle))
+			$post->post_subtitle = get_the_subtitle($post);
 	}
 
 
