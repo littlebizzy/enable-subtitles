@@ -5,6 +5,7 @@ namespace LittleBizzy\EnableSubtitles\Core;
 
 // Aliased namespaces
 use \LittleBizzy\EnableSubtitles\Admin;
+use \LittleBizzy\EnableSubtitles\Helpers;
 
 /**
  * Object Factory class
