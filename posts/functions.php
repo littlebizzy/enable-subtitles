@@ -1,5 +1,11 @@
 <?php
 
+// Block direct calls
+if (!function_exists('add_action'))
+	die;
+
+
+
 // Function check
 if (!function_exists('the_subtitle')) :
 
@@ -28,6 +34,11 @@ if (!function_exists('the_subtitle')) :
 
 endif;
 
+// Subtitle action
+add_action('the_subtitle', 'the_subtitle');
+
+
+
 // Function check
 if (!function_exists('get_the_subtitle')) :
 
@@ -46,7 +57,10 @@ if (!function_exists('get_the_subtitle')) :
 		$subtitle = empty($post_id)? '' : ''.get_post_meta($post_id, 'subtitle', true);
 
 		// Execute filter
-		return apply_filters('the_subtitle', $subtitle, $post_id);
+		return apply_filters('post_subtitle', $subtitle, $post_id);
 	}
 
 endif;
+
+// Subtitle filter
+add_filter('get_the_subtitle', 'get_the_subtitle');
