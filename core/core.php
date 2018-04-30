@@ -71,10 +71,7 @@ final class Core {
 		$this->plugin = $plugin;
 
 		// Init factory object
-		$this->plugin->factory = new Factory($plugin);
-
-		// Load the functions file
-		include $this->plugin->root.'/posts/functions.php';
+		$this->factory = new Factory($plugin);
 	}
 
 
@@ -84,23 +81,18 @@ final class Core {
 	 */
 	public function checkWPContext() {
 
+		// Load the functions file
+		include $this->plugin->root.'/posts/functions.php';
+
 		// Posts hooks
 		$this->factory->posts();
 
 		// Add the shortcode
 		$this->factory->shortcode();
 
-		// Avoid some contexts
-		if ((defined('DOING_CRON') && DOING_CRON) ||
-			(defined('DOING_AJAX') && DOING_AJAX) ||
-			(defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)) {
-			return;
-		}
-
 		// Admin area
-		if (is_admin()) {
+		if (is_admin() && !(defined('DOING_AJAX') && DOING_AJAX))
 			$this->plugin->factory->admin();
-		}
 	}
 
 
