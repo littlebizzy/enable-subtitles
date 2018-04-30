@@ -1,7 +1,5 @@
 <?php
 
-
-
 // Function check
 if (!function_exists('the_subtitle')) :
 
@@ -30,11 +28,12 @@ if (!function_exists('the_subtitle')) :
 
 endif;
 
-
-
 // Function check
 if (!function_exists('get_the_subtitle')) :
 
+	/**
+	 * Retrieve the subtitle value for a given post
+	 */
 	function get_the_subtitle($post = 0) {
 
 		// Retrieve post
