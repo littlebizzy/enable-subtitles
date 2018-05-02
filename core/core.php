@@ -92,7 +92,7 @@ final class Core {
 
 		// Admin area
 		if (is_admin() && !(defined('DOING_AJAX') && DOING_AJAX))
-			$this->plugin->factory->admin();
+			$this->factory->admin();
 	}
 
 
