@@ -105,8 +105,8 @@ class Admin {
 				background-color: #fff;
 			}
 
-</style><?php
-	}
+</style>
+<?php }
 
 
 
