@@ -74,9 +74,37 @@ class Admin {
 			return;
 		}
 
+		// Prepare prefix
+		$prefix = '#'.esc_html($this->plugin->prefix).'-';
+
 		// Styles ?>
 <style type="text/css">
-/* hi there */
+
+	<?php echo $prefix; ?>subtitlediv {
+		position: relative;
+		margin-bottom: 10px;
+		margin-top: -5px;
+	}
+	.version-4-1 <?php echo $prefix; ?>subtitlediv { margin-bottom: 0; margin-top: 0; }
+
+		#poststuff <?php echo $prefix; ?>subtitlewrap {
+			border: 0;
+			padding: 0;
+		}
+
+			<?php echo $prefix; ?>subtitlediv <?php echo $prefix; ?>subtitle {
+				clear: both;
+				display: block;
+				padding: 3px 8px;
+				font-size: 18px;
+				line-height: 100%;
+				height: 38px;
+				width: 100%;
+				outline: none;
+				margin: 10px 0 0;
+				background-color: #fff;
+			}
+
 </style><?php
 	}
 
@@ -97,7 +125,15 @@ class Admin {
 			return;
 		}
 
-		echo '<div>test</div>';
+		// Nonce field
+		wp_nonce_field(basename($this->plugin->root), $this->plugin->prefix.'_nonce', false);
+
+		// HTML ?>
+		<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlediv'); ?>">
+			<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlewrap'); ?>">
+				<input type="text" name="<?php echo esc_attr($this->plugin->prefix.'_subtitle'); ?>" size="30" value="<?php echo esc_attr(''.get_post_meta($post->ID, 'subtitle', true)); ?>" id="<?php echo esc_attr($this->plugin->prefix.'-subtitle'); ?>" autocomplete="off" />
+			</div><!-- #subtitlewrap -->
+		</div><!-- #subtitlediv --><?php
 	}
 
 
@@ -112,15 +148,17 @@ class Admin {
 			empty($post->post_type) ||
 			wp_is_post_autosave($post_id) ||
 			wp_is_post_revision($post_id) ||
+			!isset($_POST[$this->plugin->prefix.'_subtitle']) ||
 			!$this->isPostTypeSupported($post->post_type) ||
-			!$this->currentUserCanEditSubtitle($post_id, $post->post_type)) {
+			!$this->currentUserCanEditSubtitle($post_id, $post->post_type) ||
+			empty($_POST[$this->plugin->prefix.'_nonce']) || !wp_verify_nonce($_POST[$this->plugin->prefix.'_nonce'], basename($this->plugin->root))) {
 
 			// Out
 			return;
 		}
 
-		// Check nonce
-		// ...
+		// Just udate
+		update_post_meta($post_id, 'subtitle', $_POST[$this->plugin->prefix.'_subtitle']);
 	}
 
 
