@@ -91,7 +91,7 @@ final class Core {
 		$this->factory->shortcode();
 
 		// Admin area
-		if (is_admin() && !(defined('DOING_AJAX') && DOING_AJAX))
+		if (is_admin())
 			$this->factory->admin();
 	}
 
