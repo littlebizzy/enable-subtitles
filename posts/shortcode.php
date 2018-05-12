@@ -27,11 +27,14 @@ class Shortcode {
 	 */
 	public function handler($atts) {
 
+		// Merge default attributes
+		$atts = shortcode_atts(['post' => 0], $atts);
+
 		// Prepare output
 		$escapeHTML = apply_filters('post_subtitle_esc_html', true);
 
 		// Check post by attributes and retrieve data
-		$subtitle = get_the_subtitle(isset($atts['post'])? $atts['post'] : 0);
+		$subtitle = get_the_subtitle($atts['post']);
 
 		// Done
 		echo $escapeHTML? esc_html($subtitle) : $subtitle;
