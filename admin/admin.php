@@ -45,8 +45,9 @@ class Admin {
 		// Set properties
 		$this->plugin = $plugin;
 
-		// Admin head
+		// Custom styles and JS code
 		add_action('admin_head', [&$this, 'addSubtitleStyles']);
+		add_action('admin_enqueue_scripts', array( &$this, 'addSubtitleScripts' ) );
 
 		// After title hook
 		add_action('edit_form_before_permalink', [&$this, 'addSubtitleField']);
@@ -107,6 +108,16 @@ class Admin {
 
 </style>
 <?php }
+
+
+
+	/**
+	 * Add the script to correct the tab key behavior
+	 */
+	public function addSubtitleScripts($hook) {
+		if ('post-new.php' == $hook || 'post.php' == $hook)
+			wp_enqueue_script($this->plugin->prefix.'-admin-scripts', plugins_url('admin/admin.js', $this->plugin->file), ['jquery'], $this->plugin->version, true);
+	}
 
 
 
