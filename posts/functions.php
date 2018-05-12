@@ -54,7 +54,7 @@ if (!function_exists('get_the_subtitle')) :
 		$post_id = empty($post->ID)? 0 : $post->ID;
 
 		// Retrieve data
-		$subtitle = empty($post_id)? '' : ''.get_post_meta($post_id, 'subtitle', true);
+		$subtitle = empty($post_id)? '' : ''.get_post_meta($post_id, '_subtitle', true);
 
 		// Execute filter
 		return apply_filters('post_subtitle', $subtitle, $post_id);

@@ -131,7 +131,7 @@ class Admin {
 		// HTML ?>
 		<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlediv'); ?>">
 			<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlewrap'); ?>">
-				<input type="text" name="<?php echo esc_attr($this->plugin->prefix.'_subtitle'); ?>" size="30" value="<?php echo esc_attr(''.get_post_meta($post->ID, 'subtitle', true)); ?>" id="<?php echo esc_attr($this->plugin->prefix.'-subtitle'); ?>" autocomplete="off" />
+				<input type="text" name="<?php echo esc_attr($this->plugin->prefix.'_subtitle'); ?>" size="30" value="<?php echo esc_attr(''.get_post_meta($post->ID, '_subtitle', true)); ?>" id="<?php echo esc_attr($this->plugin->prefix.'-subtitle'); ?>" autocomplete="off" />
 			</div><!-- #subtitlewrap -->
 		</div><!-- #subtitlediv --><?php
 	}
@@ -157,8 +157,14 @@ class Admin {
 			return;
 		}
 
-		// Just udate
-		update_post_meta($post_id, 'subtitle', $_POST[$this->plugin->prefix.'_subtitle']);
+		// Submitted value
+		$subtitle = $_POST[$this->plugin->prefix.'_subtitle'];
+
+		// Determine if strip tags
+		$stripTags = apply_filters('post_subtitle_strip_tags', true);
+
+		// Update subtitle text
+		update_post_meta($post_id, '_subtitle', $stripTags? strip_tags($subtitle) : $subtitle);
 	}
 
 
