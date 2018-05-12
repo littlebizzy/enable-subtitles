@@ -17,12 +17,14 @@ if (!function_exists('the_subtitle')) :
 		// Retrieve data
 		$subtitle = get_the_subtitle();
 
-		// Check value
-		if (0 == strlen($subtitle))
-			return '';
+		// Check escaping
+		$escapeHTML = apply_filters('post_subtitle_esc_html', true);
+
+		// Prepare output
+		$subtitle = $escapeHTML? esc_html($subtitle) : $subtitle;
 
 		// Compose
-		$subtitle = $before.$title.$after;
+		$subtitle = $before.$subtitle.$after;
 
 		// Show
 		if ($echo)
