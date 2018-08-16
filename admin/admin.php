@@ -142,7 +142,7 @@ class Admin {
 		// HTML ?>
 		<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlediv'); ?>">
 			<div id="<?php echo esc_attr($this->plugin->prefix.'-subtitlewrap'); ?>">
-				<input type="text" name="<?php echo esc_attr($this->plugin->prefix.'_subtitle'); ?>" size="30" value="<?php echo esc_attr(''.get_post_meta($post->ID, '_subtitle', true)); ?>" id="<?php echo esc_attr($this->plugin->prefix.'-subtitle'); ?>" autocomplete="off" />
+				<input type="text" name="<?php echo esc_attr($this->plugin->prefix.'_subtitle'); ?>" size="30" placeholder="Enter subtitle here" value="<?php echo esc_attr(''.get_post_meta($post->ID, '_subtitle', true)); ?>" id="<?php echo esc_attr($this->plugin->prefix.'-subtitle'); ?>" autocomplete="off" />
 			</div><!-- #subtitlewrap -->
 		</div><!-- #subtitlediv --><?php
 	}

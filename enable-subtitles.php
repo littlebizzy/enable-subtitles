@@ -3,7 +3,7 @@
 Plugin Name: Enable Subtitles
 Plugin URI: https://www.littlebizzy.com/plugins/enable-subtitles
 Description: Creates a the_subtitle function for use in WordPress posts and pages, such as for H2 subtitles, that can be called in template files or shortcodes.
-Version: 1.0.0
+Version: 1.0.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -21,7 +21,7 @@ if (!function_exists('add_action'))
 // Plugin constants
 const FILE = __FILE__;
 const PREFIX = 'enbstl';
-const VERSION = '1.0.0';
+const VERSION = '1.0.1';
 
 // Loader
 require_once dirname(FILE).'/helpers/loader.php';
