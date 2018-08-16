@@ -23,14 +23,4 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	$('#enbstl-subtitle').attr('data-placeholder', $('#enbstl-subtitle').attr('placeholder'));
-
-	$('#enbstl-subtitle').focus(function() {
-		$('#enbstl-subtitle').attr('placeholder', '');
-	});
-
-	$('#enbstl-subtitle').blur(function() {
-		$('#enbstl-subtitle').attr('placeholder', $('#enbstl-subtitle').attr('data-placeholder'));
-	});
-
 });
