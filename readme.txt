@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: ENBSTL
@@ -234,7 +234,10 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 
 == Changelog ==
 
+= 1.0.1 =
+* added "Enter subtitle here" field placeholder
+
 = 1.0.0 =
 * initial release
 * plugin uses PHP namespaces
-* object oriented code
+* object-oriented code
