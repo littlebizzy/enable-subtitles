@@ -85,9 +85,16 @@ if ( is_admin() ) {
         // Retrieve the existing subtitle and sanitize during output
         $subtitle = esc_html( get_post_meta( $post->ID, 'subtitle', true ) );
 
-        // Output the label and text input for the subtitle
-        echo '<label for="subtitle">' . __( 'Subtitle:', 'enable-subtitles' ) . '</label>';
-        echo '<input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" class="widefat" placeholder="' . esc_attr__( 'Enter subtitle here...', 'enable-subtitles' ) . '" />';
+        // Output the label and text input for the subtitle in one echo statement
+        echo '
+        <div id="subtitlediv">
+            <div id="subtitlewrap">
+                <label for="subtitle">' . __( 'Subtitle:', 'enable-subtitles' ) . '</label>
+                <input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" class="widefat" placeholder="' . esc_attr__( 'Add subtitle', 'enable-subtitles' ) . '" />
+            </div>
+            <div class="inside"></div>
+            <input type="hidden" id="subtitle_nonce" name="subtitle_nonce" value="' . esc_attr( wp_create_nonce( 'subtitle_nonce_action' ) ) . '">
+        </div>';
     }
 
     // Save the subtitle meta
