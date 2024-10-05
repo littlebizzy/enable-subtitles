@@ -1,6 +1,6 @@
 # Enable Subtitles
 
-Creates a new the_subtitle function for use in WordPress posts and pages, such as for H2 subtitles, that can be used in template files or shortcodes.
+Creates new the_subtitle function
 
 * [Plugin Homepage (LittleBizzy.com)](https://www.littlebizzy.com/plugins/enable-subtitles)
 * [Free Facebook Group](https://www.facebook.com/groups/littlebizzy/)
