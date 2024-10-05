@@ -61,26 +61,47 @@ add_filter( 'register_post_type_args', 'add_subtitle_to_custom_post_types', 10, 
 if ( is_admin() ) {
     // Add a meta box for subtitles
     function add_subtitle_meta_box() {
-        add_meta_box( 'subtitle_meta_box', __( 'Subtitle', 'enable-subtitles' ), 'render_subtitle_meta_box', 'post', 'normal', 'high' );
-        add_meta_box( 'subtitle_meta_box', __( 'Subtitle', 'enable-subtitles' ), 'render_subtitle_meta_box', 'page', 'normal', 'high' );
+        // Get all post types that support subtitles
+        $post_types = get_post_types( [ 'supports' => 'subtitle' ], 'names' );
+
+        foreach ( $post_types as $post_type ) {
+            add_meta_box( 
+                'subtitle_meta_box', 
+                __( 'Subtitle', 'enable-subtitles' ), 
+                'render_subtitle_meta_box', 
+                $post_type, 
+                'normal', 
+                'high' 
+            );
+        }
     }
 
     // Render the subtitle meta box
     function render_subtitle_meta_box( $post ) {
+        // Security nonce field for form submission verification
         wp_nonce_field( 'subtitle_nonce_action', 'subtitle_nonce' );
+
+        // Retrieve the existing subtitle
         $subtitle = get_post_meta( $post->ID, 'subtitle', true );
+
+        // Output the label and text input for the subtitle
         echo '<label for="subtitle">' . __( 'Subtitle:', 'enable-subtitles' ) . '</label>';
-        echo '<input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" style="width: 100%;" placeholder="' . esc_attr__( 'Enter subtitle here...', 'enable-subtitles' ) . '" />';
+        echo '<input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" class="widefat" placeholder="' . esc_attr__( 'Enter subtitle here...', 'enable-subtitles' ) . '" />';
     }
 
     // Save the subtitle meta
     function save_subtitle( $post_id ) {
+        // Check nonce for security
         if ( ! isset( $_POST['subtitle_nonce'] ) || ! wp_verify_nonce( $_POST['subtitle_nonce'], 'subtitle_nonce_action' ) ) {
             return;
         }
+
+        // Check user permissions
         if ( ! current_user_can( 'edit_post', $post_id ) ) {
             return;
         }
+
+        // Save or update the subtitle
         if ( isset( $_POST['subtitle'] ) ) {
             update_post_meta( $post_id, 'subtitle', sanitize_text_field( $_POST['subtitle'] ) );
         }
