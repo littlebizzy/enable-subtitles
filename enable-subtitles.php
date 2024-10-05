@@ -65,17 +65,15 @@ if ( is_admin() ) {
         $post_types = get_post_types( ['public' => true], 'names' );
 
         foreach ( $post_types as $post_type ) {
-            // Check if the post type supports subtitles
-            if ( post_type_supports( $post_type, 'subtitle' ) ) {
-                add_meta_box( 
-                    'subtitle_meta_box', 
-                    __( 'Subtitle', 'enable-subtitles' ), 
-                    'render_subtitle_meta_box', 
-                    $post_type, 
-                    'normal', 
-                    'high' 
-                );
-            }
+            // Directly add the meta box for all post types
+            add_meta_box( 
+                'subtitle_meta_box', 
+                __( 'Subtitle', 'enable-subtitles' ), 
+                'render_subtitle_meta_box', 
+                $post_type, 
+                'normal', 
+                'high' 
+            );
         }
     }
 
