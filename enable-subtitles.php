@@ -24,7 +24,7 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 // Retrieve the subtitle for a post or page
 function get_the_subtitle( $post_id = null ) {
     $post_id = $post_id ? $post_id : get_the_ID();
-    $subtitle = get_post_meta( $post_id, 'subtitle', true ); // Retrieve subtitle without escaping here
+    $subtitle = get_post_meta( $post_id, 'subtitle', true ); // Retrieve subtitle
     return apply_filters( 'enable_subtitles_output', esc_html( $subtitle ), $post_id ); // Sanitize during output
 }
 
@@ -39,23 +39,21 @@ function the_subtitle() {
 }
 add_shortcode( 'subtitle', 'the_subtitle' );
 
-// Add subtitle support to post types
+// Enable subtitle support for all public post types
 function enable_subtitle_support() {
     // Enable subtitle support for standard post types
     add_post_type_support( 'post', 'subtitle' );
     add_post_type_support( 'page', 'subtitle' );
-}
 
-// Automatically add subtitle support for all custom post types
-function add_subtitle_to_custom_post_types( $args, $post_type ) {
-    if ( isset( $args['supports'] ) && ! in_array( 'subtitle', $args['supports'] ) ) {
-        $args['supports'][] = 'subtitle'; // Add subtitle support
+    // Automatically add subtitle support for all custom post types
+    $post_types = get_post_types( ['public' => true], 'names' );
+    foreach ( $post_types as $post_type ) {
+        add_post_type_support( $post_type, 'subtitle' ); // Add subtitle support to each post type
     }
-    return $args;
 }
 
+// Hooking into WordPress
 add_action( 'init', 'enable_subtitle_support' );
-add_filter( 'register_post_type_args', 'add_subtitle_to_custom_post_types', 10, 2 );
 
 // Admin functions
 if ( is_admin() ) {
