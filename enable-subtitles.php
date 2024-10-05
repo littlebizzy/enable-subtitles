@@ -21,15 +21,23 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
+// Retrieve the subtitle for a post or page
+function get_the_subtitle( $post_id = null ) {
+    $post_id = $post_id ? $post_id : get_the_ID();
+    $subtitle = esc_html( get_post_meta( $post_id, 'subtitle', true ) );
+    return apply_filters( 'enable_subtitles_output', $subtitle, $post_id );
+}
+
 // Display the subtitle for a post or page
-function display_subtitle() {
+function the_subtitle() {
     global $post;
 
-    if ( isset( $post->subtitle ) ) {
-        echo '<h2 class="subtitle">' . esc_html( $post->subtitle ) . '</h2>';
+    if ( isset( $post->ID ) ) {
+        $subtitle = get_the_subtitle( $post->ID );
+        echo '<h2 class="subtitle">' . $subtitle . '</h2>';
     }
 }
-add_shortcode( 'subtitle', 'display_subtitle' );
+add_shortcode( 'subtitle', 'the_subtitle' );
 
 // Add subtitle support to posts and pages
 function enable_subtitle_support() {
@@ -42,16 +50,16 @@ add_action( 'init', 'enable_subtitle_support' );
 if ( is_admin() ) {
     // Add a meta box for subtitles
     function add_subtitle_meta_box() {
-        add_meta_box( 'subtitle_meta_box', 'Subtitle', 'render_subtitle_meta_box', 'post', 'normal', 'high' );
-        add_meta_box( 'subtitle_meta_box', 'Subtitle', 'render_subtitle_meta_box', 'page', 'normal', 'high' );
+        add_meta_box( 'subtitle_meta_box', __( 'Subtitle', 'enable-subtitles' ), 'render_subtitle_meta_box', 'post', 'normal', 'high' );
+        add_meta_box( 'subtitle_meta_box', __( 'Subtitle', 'enable-subtitles' ), 'render_subtitle_meta_box', 'page', 'normal', 'high' );
     }
 
     // Render the subtitle meta box
     function render_subtitle_meta_box( $post ) {
         wp_nonce_field( 'subtitle_nonce_action', 'subtitle_nonce' );
         $subtitle = get_post_meta( $post->ID, 'subtitle', true );
-        echo '<label for="subtitle">Subtitle: </label>';
-        echo '<input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" />';
+        echo '<label for="subtitle">' . __( 'Subtitle:', 'enable-subtitles' ) . '</label>';
+        echo '<input type="text" id="subtitle" name="subtitle" value="' . esc_attr( $subtitle ) . '" style="width: 100%;" placeholder="' . esc_attr__( 'Enter subtitle here...', 'enable-subtitles' ) . '" />';
     }
 
     // Save the subtitle meta
