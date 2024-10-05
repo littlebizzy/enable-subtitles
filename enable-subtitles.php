@@ -24,8 +24,8 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 // Retrieve the subtitle for a post or page
 function get_the_subtitle( $post_id = null ) {
     $post_id = $post_id ? $post_id : get_the_ID();
-    $subtitle = esc_html( get_post_meta( $post_id, 'subtitle', true ) );
-    return apply_filters( 'enable_subtitles_output', $subtitle, $post_id );
+    $subtitle = get_post_meta( $post_id, 'subtitle', true ); // Retrieve subtitle without escaping here
+    return apply_filters( 'enable_subtitles_output', esc_html( $subtitle ), $post_id ); // Sanitize during output
 }
 
 // Display the subtitle for a post or page
@@ -81,8 +81,8 @@ if ( is_admin() ) {
         // Security nonce field for form submission verification
         wp_nonce_field( 'subtitle_nonce_action', 'subtitle_nonce' );
 
-        // Retrieve the existing subtitle
-        $subtitle = get_post_meta( $post->ID, 'subtitle', true );
+        // Retrieve the existing subtitle and sanitize during output
+        $subtitle = esc_html( get_post_meta( $post->ID, 'subtitle', true ) );
 
         // Output the label and text input for the subtitle
         echo '<label for="subtitle">' . __( 'Subtitle:', 'enable-subtitles' ) . '</label>';
