@@ -39,12 +39,23 @@ function the_subtitle() {
 }
 add_shortcode( 'subtitle', 'the_subtitle' );
 
-// Add subtitle support to posts and pages
+// Add subtitle support to post types
 function enable_subtitle_support() {
+    // Enable subtitle support for standard post types
     add_post_type_support( 'post', 'subtitle' );
     add_post_type_support( 'page', 'subtitle' );
 }
+
+// Automatically add subtitle support for all custom post types
+function add_subtitle_to_custom_post_types( $args, $post_type ) {
+    if ( isset( $args['supports'] ) && ! in_array( 'subtitle', $args['supports'] ) ) {
+        $args['supports'][] = 'subtitle'; // Add subtitle support
+    }
+    return $args;
+}
+
 add_action( 'init', 'enable_subtitle_support' );
+add_filter( 'register_post_type_args', 'add_subtitle_to_custom_post_types', 10, 2 );
 
 // Admin functions
 if ( is_admin() ) {
