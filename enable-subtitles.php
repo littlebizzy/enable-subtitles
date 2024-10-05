@@ -61,18 +61,21 @@ add_filter( 'register_post_type_args', 'add_subtitle_to_custom_post_types', 10, 
 if ( is_admin() ) {
     // Add a meta box for subtitles
     function add_subtitle_meta_box() {
-        // Get all post types that support subtitles
-        $post_types = get_post_types( [ 'supports' => 'subtitle' ], 'names' );
+        // Get all post types that are publicly queryable (including custom post types)
+        $post_types = get_post_types( ['public' => true], 'names' );
 
         foreach ( $post_types as $post_type ) {
-            add_meta_box( 
-                'subtitle_meta_box', 
-                __( 'Subtitle', 'enable-subtitles' ), 
-                'render_subtitle_meta_box', 
-                $post_type, 
-                'normal', 
-                'high' 
-            );
+            // Check if the post type supports subtitles
+            if ( post_type_supports( $post_type, 'subtitle' ) ) {
+                add_meta_box( 
+                    'subtitle_meta_box', 
+                    __( 'Subtitle', 'enable-subtitles' ), 
+                    'render_subtitle_meta_box', 
+                    $post_type, 
+                    'normal', 
+                    'high' 
+                );
+            }
         }
     }
 
