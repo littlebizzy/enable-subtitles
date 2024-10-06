@@ -8,6 +8,8 @@ Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
+GitHub Plugin URI: littlebizzy/enable-subtitles
+Primary Branch: master
 */
 
 // Exit if accessed directly
