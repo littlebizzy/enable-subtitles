@@ -25,7 +25,9 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 function get_the_subtitle( $post_id = null ) {
     $post_id = $post_id ? $post_id : get_the_ID();
     $subtitle = get_post_meta( $post_id, '_subtitle', true ); // Retrieve subtitle
-    return apply_filters( 'enable_subtitles_output', esc_html( $subtitle ), $post_id ); // Sanitize during output
+
+    // Return the subtitle or null if it doesn't exist
+    return apply_filters( 'enable_subtitles_output', wp_kses_post( $subtitle ), $post_id ); // Sanitize during output
 }
 
 // Display the subtitle for a post or page
@@ -34,9 +36,15 @@ function the_subtitle() {
 
     if ( isset( $post->ID ) ) {
         $subtitle = get_the_subtitle( $post->ID );
-        echo '<h2 class="subtitle">' . $subtitle . '</h2>';
+
+        // Only display the subtitle if it exists
+        if ( !empty( $subtitle ) ) {
+            echo '<h2 class="subtitle">' . $subtitle . '</h2>';
+        }
     }
 }
+
+// Register the shortcode for displaying the subtitle
 add_shortcode( 'subtitle', 'the_subtitle' );
 
 // Enable subtitle support for all public post types
