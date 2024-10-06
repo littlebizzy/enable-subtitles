@@ -72,9 +72,9 @@ if ( is_admin() ) {
 
         // Output the HTML for the subtitle input field
         echo '
-        <div id="subtitlewrap">
-            <input type="text" id="subtitle" name="post_subtitle" value="' . esc_attr( $subtitle ) . '" class="widefat" placeholder="' . esc_attr__( 'Add subtitle', 'enable-subtitles' ) . '" aria-label="' . esc_attr__( 'Subtitle', 'enable-subtitles' ) . '" size="30" spellcheck="true" autocomplete="off" style="font-size: 18px;"/>
-        </div>';
+    <div id="subtitlewrap">
+        <input type="text" name="post_subtitle" size="30" value="' . esc_attr( $subtitle ) . '" id="subtitle" placeholder="' . esc_attr__( 'Add subtitle', 'enable-subtitles' ) . '" spellcheck="true" autocomplete="off" class="widefat" style="font-size: 18px;" />
+    </div>';
     }
 
     // Save the subtitle meta
