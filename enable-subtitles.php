@@ -39,29 +39,15 @@ function the_subtitle() {
 
         // Only display the subtitle if it exists
         if ( !empty( $subtitle ) ) {
-            echo '<h2 class="subtitle">' . $subtitle . '</h2>';
+            // Allow modification of the heading level
+            $heading_tag = apply_filters( 'subtitle_heading_tag', 'h2' ); // Default to h2
+            echo '<' . esc_html( $heading_tag ) . ' class="subtitle">' . $subtitle . '</' . esc_html( $heading_tag ) . '>';
         }
     }
 }
 
 // Register the shortcode for displaying the subtitle
 add_shortcode( 'subtitle', 'the_subtitle' );
-
-// Enable subtitle support for all public post types
-function enable_subtitle_support() {
-    // Enable subtitle support for standard post types
-    add_post_type_support( 'post', 'subtitle' );
-    add_post_type_support( 'page', 'subtitle' );
-
-    // Automatically add subtitle support for all custom post types
-    $post_types = get_post_types( ['public' => true], 'names' );
-    foreach ( $post_types as $post_type ) {
-        add_post_type_support( $post_type, 'subtitle' ); // Add subtitle support to each post type
-    }
-}
-
-// Hooking into WordPress
-add_action( 'init', 'enable_subtitle_support' );
 
 // Admin functions
 if ( is_admin() ) {
