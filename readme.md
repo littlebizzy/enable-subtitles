@@ -6,6 +6,7 @@ Creates new the_subtitle function
 
 ### 2.0.0
 - added support for Git Updater
+- disables WordPress.org updates
 - major code refactor to follow WordPress standards
 - changed retrieval function name to `get_the_subtitle()` to mirror native post titles
 - changed display function name to `the_subtitle()` to mirror native post titles
