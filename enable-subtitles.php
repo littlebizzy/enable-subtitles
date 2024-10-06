@@ -49,7 +49,7 @@ function the_subtitle() {
 // Register the shortcode for displaying the subtitle
 add_shortcode( 'subtitle', 'the_subtitle' );
 
-// Enable subtitle support for all public post types
+// Enable subtitle support for all custom post types
 function enable_subtitle_support() {
     // Get all public post types
     $post_types = get_post_types(['public' => true], 'names');
