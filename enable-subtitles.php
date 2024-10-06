@@ -49,6 +49,24 @@ function the_subtitle() {
 // Register the shortcode for displaying the subtitle
 add_shortcode( 'subtitle', 'the_subtitle' );
 
+// Enable subtitle support for all public post types
+function enable_subtitle_support() {
+    // Get all public post types
+    $post_types = get_post_types(['public' => true], 'names');
+
+    // Allow customization of post types that should support subtitles
+    $post_types_with_subtitles = apply_filters('enable_subtitles_post_types', $post_types);
+
+    // Loop through the post types and ensure they can support subtitles
+    foreach ($post_types_with_subtitles as $post_type) {
+        // Since there’s no direct post type support for 'subtitle', you can handle it via post meta
+        // Here you could add any additional logic if needed for specific post types in the future
+    }
+}
+
+// Hook into WordPress
+add_action('init', 'enable_subtitle_support');
+
 // Admin functions
 if ( is_admin() ) {
     // Add the subtitle input field after the post title
@@ -66,9 +84,9 @@ if ( is_admin() ) {
 
         // Output the HTML for the subtitle input field
         echo '
-    <div id="subtitlewrap">
-        <input type="text" name="post_subtitle" size="30" value="' . esc_attr( $subtitle ) . '" id="subtitle" placeholder="' . esc_attr__( 'Add subtitle', 'enable-subtitles' ) . '" spellcheck="true" autocomplete="off" class="widefat" style="font-size: 18px;" />
-    </div>';
+        <div id="subtitlewrap">
+            <input type="text" name="post_subtitle" size="30" value="' . esc_attr( $subtitle ) . '" id="subtitle" placeholder="' . esc_attr__( 'Add subtitle', 'enable-subtitles' ) . '" spellcheck="true" autocomplete="off" class="widefat" style="font-size: 18px;" />
+        </div>';
     }
 
     // Save the subtitle meta
