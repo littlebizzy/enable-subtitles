@@ -3,7 +3,8 @@
 Plugin Name: Enable Subtitles
 Plugin URI: https://www.littlebizzy.com/plugins/enable-subtitles
 Description: Creates new the_subtitle function
-Version: 2.0.0
+Version: 2.0.1
+Requires PHP: 7.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -12,12 +13,12 @@ GitHub Plugin URI: littlebizzy/enable-subtitles
 Primary Branch: master
 */
 
-// Exit if accessed directly
+// prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Disable WordPress.org updates for this plugin
+// disable wordpress.org updates for this plugin
 add_filter( 'gu_override_dot_org', function( $overrides ) {
     $overrides[] = 'enable-subtitles/enable-subtitles.php';
     return $overrides;
