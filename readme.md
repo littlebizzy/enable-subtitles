@@ -2,7 +2,10 @@
 
 Creates new the_subtitle function
 
-## Changelog 
+## Changelog
+
+### 2.0.1
+- added `Requires PHP` plugin header
 
 ### 2.0.0
 - added support for Git Updater
